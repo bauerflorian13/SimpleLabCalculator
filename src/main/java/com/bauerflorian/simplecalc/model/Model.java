@@ -1,7 +1,9 @@
 package com.bauerflorian.simplecalc.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Model {
 
@@ -13,7 +15,7 @@ public class Model {
     private SimpleCalculation rGen;
     private SimpleCalculation nGen;
 
-    private final List<Listener> listeners = new ArrayList<>();
+    private final Map<SimpleCalculation, List<Listener>> listeners = new HashMap<>();
 
     public Model() {
         initFormulas();
@@ -30,63 +32,59 @@ public class Model {
 
     public void setXSGen(double xValue){
         sGen.setXandCalculateY(xValue);
-        notifyObservers();
+        notifyObserverForCalculation(sGen);
     }
 
     public void setYSGen(double yValue){
         sGen.setYandCalculateX(yValue);
-        notifyObservers();
+        notifyObserverForCalculation(sGen);
     }
 
     public void setXRGen(double xValue){
         rGen.setXandCalculateY(xValue);
-        notifyObservers();
+        notifyObserverForCalculation(rGen);
     }
 
     public void setYRGen(double yValue){
         rGen.setYandCalculateX(yValue);
-        notifyObservers();
+        notifyObserverForCalculation(rGen);
     }
 
     public void setXNGen(double xValue){
         nGen.setXandCalculateY(xValue);
-        notifyObservers();
+        notifyObserverForCalculation(nGen);
     }
 
     public void setYNGen(double yValue){
         nGen.setYandCalculateX(yValue);
-        notifyObservers();
+        notifyObserverForCalculation(nGen);
     }
 
-    public Double getXValueSGen(){
-        return sGen.getxValue();
+    public SimpleCalculation getsGen(){
+        return sGen;
     }
 
-    public Double getYValueSGen(){
-        return sGen.getyValue();
+    public SimpleCalculation getrGen() {
+        return rGen;
     }
 
-    public Double getXValueRGen(){
-        return rGen.getxValue();
+    public SimpleCalculation getnGen() {
+        return nGen;
     }
 
-    public Double getYValueRGen(){
-        return rGen.getyValue();
+    public void addListener(SimpleCalculation calculation, Listener listener){
+        if(!listeners.containsKey(calculation)){
+            listeners.put(calculation, new ArrayList<>());
+        }
+        listeners.get(calculation).add(listener);
     }
 
-    public Double getXValueNGen(){
-        return nGen.getxValue();
+    private void notifyAllObservers(){
+        listeners.values().forEach(l -> l.forEach(a -> a.onChange(this)));
     }
 
-    public Double getYValueNGen(){
-        return nGen.getyValue();
-    }
-    public void addListener(Listener listener){
-        listeners.add(listener);
-    }
-
-    private void notifyObservers(){
-        listeners.forEach(l -> l.onChange(this));
+    private void notifyObserverForCalculation(SimpleCalculation simpleCalculation){
+        listeners.get(simpleCalculation).forEach(l -> l.onChange(this));
     }
 
 

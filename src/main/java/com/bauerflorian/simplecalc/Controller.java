@@ -4,8 +4,15 @@ import com.bauerflorian.simplecalc.model.Model;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import org.apache.commons.lang3.StringUtils;
 
 public class Controller {
+    public static final String N_GEN = "N-Gen";
+    public static final String R_GEN = "RdRP-Gen";
+    public static final String S_GEN = "S-Gen";
+    public static final String FX_BACKGROUND_COLOR_DEFAULT = "-fx-background-color: white;";
+    public static final String FX_BACKGROUND_COLOR_CHANGED = "-fx-background-color: #00ff91;";
+    public static final String FX_BACKGROUND_COLOR_ERROR = "-fx-background-color: #e23b3b;";
     @FXML
     private Label statusText;
 
@@ -36,14 +43,56 @@ public class Controller {
 
     private void setModelListenerCallbacks(Model model) {
         // sgen
-        model.addListener(m -> sgenXValue.setText(m.getXValueSGen() + ""));
-        model.addListener(m -> sgenYValue.setText(m.getYValueSGen() + ""));
+        model.addListener(model.getsGen(), m -> {
+            if(StringUtils.equals(sgenXValue.getText(), m.getsGen().getxValueRounded()+"")){
+                sgenXValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+            } else {
+                sgenXValue.setText(m.getsGen().getxValueRounded() + "");
+                sgenXValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
+            }
+        });
+        model.addListener(model.getsGen(), m -> {
+            if(StringUtils.equals(sgenYValue.getText(), m.getsGen().getyValue()+"")){
+                sgenYValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+            } else {
+                sgenYValue.setText(m.getsGen().getyValue() + "");
+                sgenYValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
+            }
+        });
         // rgen
-        model.addListener(m -> rgenXValue.setText(m.getXValueRGen() + ""));
-        model.addListener(m -> rgenYValue.setText(m.getYValueRGen() + ""));
+        model.addListener(model.getrGen(), m -> {
+            if(StringUtils.equals(rgenXValue.getText(), m.getrGen().getxValueRounded()+"")){
+                rgenXValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+            } else {
+                rgenXValue.setText(m.getrGen().getxValueRounded() + "");
+                rgenXValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
+            }
+        });
+        model.addListener(model.getrGen(), m -> {
+            if(StringUtils.equals(rgenYValue.getText(), m.getrGen().getyValue()+"")){
+                rgenYValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+            } else {
+                rgenYValue.setText(m.getrGen().getyValue() + "");
+                rgenYValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
+            }
+        });
         // ngen
-        model.addListener(m -> ngenXValue.setText(m.getXValueNGen() + ""));
-        model.addListener(m -> ngenYValue.setText(m.getYValueNGen() + ""));
+        model.addListener(model.getnGen(), m -> {
+            if(StringUtils.equals(ngenXValue.getText(), m.getnGen().getxValueRounded()+"")){
+                ngenXValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+            } else {
+                ngenXValue.setText(m.getnGen().getxValueRounded() + "");
+                ngenXValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
+            }
+        });
+        model.addListener(model.getnGen(), m -> {
+            if(StringUtils.equals(ngenYValue.getText(), m.getnGen().getyValue()+"")){
+                ngenYValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+            } else {
+                ngenYValue.setText(m.getnGen().getyValue() + "");
+                ngenYValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
+            }
+        });
     }
 
     public Controller() {
@@ -53,6 +102,9 @@ public class Controller {
     @FXML
     protected void onCalcBtnClick() {
         statusText.setText("Calculating...");
+        long startTime = System.currentTimeMillis();
+        setDefaultColorSchemeToTextfields();
+
         try {
             // do not overwhelm the user with to fast performance :P
             Thread.sleep(100);
@@ -60,12 +112,45 @@ public class Controller {
             e.printStackTrace();
         }
 
-        if(sgenXValue.getText() != null && !sgenXValue.getText().isBlank()){
-            double xValue = Double.parseDouble(sgenXValue.getText());
-            model.setXSGen(xValue);
-        }
+        boolean allValid = validateInputTextField(sgenYValue, S_GEN) && validateInputTextField(rgenYValue, R_GEN) && validateInputTextField(ngenYValue, N_GEN);
+        if(!allValid) return;
 
-        statusText.setText("Calculation finished!");
+
+        double sgenValue = Double.parseDouble(sgenYValue.getText().replace(",","."));
+        model.setYSGen(sgenValue);
+        double rgenValue = Double.parseDouble(rgenYValue.getText().replace(",","."));
+        model.setYRGen(rgenValue);
+        double ngenValue = Double.parseDouble(ngenYValue.getText().replace(",","."));
+        model.setYNGen(ngenValue);
+
+
+
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+        statusText.setText("Calculation finished in " + (duration * 1.0) / 1000 + "s");
+    }
+
+    private void setDefaultColorSchemeToTextfields() {
+        sgenXValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+        sgenYValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+        rgenXValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+        rgenYValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+        ngenXValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+        ngenYValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+    }
+
+    private boolean validateInputTextField(TextField inputField, String valueName) {
+        if(!isInCorrectNumberFormat(inputField.getText())){
+            statusText.setText("Please enter a valid value for " + valueName + ".");
+            inputField.setStyle(FX_BACKGROUND_COLOR_ERROR);
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isInCorrectNumberFormat(String str) {
+        // match a number with optional '-', up to two decimals before and two decimals after the comma
+        return StringUtils.isNotBlank(str) && str.matches("-?\\d\\d?([\\.,]\\d\\d?)?");
     }
 
     public void setModel(Model model){

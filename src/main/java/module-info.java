@@ -1,6 +1,7 @@
 module com.bauerflorian.simplecalc {
     requires javafx.controls;
     requires javafx.fxml;
+    requires org.apache.commons.lang3;
 
 
     opens com.bauerflorian.simplecalc to javafx.fxml;
