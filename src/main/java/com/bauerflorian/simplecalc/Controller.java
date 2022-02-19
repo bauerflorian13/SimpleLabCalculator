@@ -40,6 +40,8 @@ public class Controller {
     private TextField ngenYValue;
 
     private Model model;
+    private boolean roundInputNumbers = false;
+    private boolean roundOutputNumbers = true;
 
     public Controller(Model model) {
         this.model = model;
@@ -48,56 +50,74 @@ public class Controller {
 
     private void setModelListenerCallbacks(Model model) {
         // sgen
-        model.addListener(model.getsGen(), m -> {
-            if(StringUtils.equals(sgenXValue.getText(), m.getsGen().getxValueRounded()+"")){
-                sgenXValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
-            } else {
-                sgenXValue.setText(m.getsGen().getxValueRounded() + "");
-                sgenXValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
-            }
-        });
-        model.addListener(model.getsGen(), m -> {
-            if(StringUtils.equals(sgenYValue.getText(), m.getsGen().getyValue()+"")){
-                sgenYValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
-            } else {
-                sgenYValue.setText(m.getsGen().getyValue() + "");
-                sgenYValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
-            }
-        });
+        model.addListener(model.getsGen(), this::redrawSgenXValueField);
+        model.addListener(model.getsGen(), this::redrawSgenYValueField);
         // rgen
-        model.addListener(model.getrGen(), m -> {
-            if(StringUtils.equals(rgenXValue.getText(), m.getrGen().getxValueRounded()+"")){
-                rgenXValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
-            } else {
-                rgenXValue.setText(m.getrGen().getxValueRounded() + "");
-                rgenXValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
-            }
-        });
-        model.addListener(model.getrGen(), m -> {
-            if(StringUtils.equals(rgenYValue.getText(), m.getrGen().getyValue()+"")){
-                rgenYValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
-            } else {
-                rgenYValue.setText(m.getrGen().getyValue() + "");
-                rgenYValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
-            }
-        });
+        model.addListener(model.getrGen(), this::redrawRgenXValueField);
+        model.addListener(model.getrGen(), this::redrawRgenYValueField);
         // ngen
-        model.addListener(model.getnGen(), m -> {
-            if(StringUtils.equals(ngenXValue.getText(), m.getnGen().getxValueRounded()+"")){
-                ngenXValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
-            } else {
-                ngenXValue.setText(m.getnGen().getxValueRounded() + "");
-                ngenXValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
-            }
-        });
-        model.addListener(model.getnGen(), m -> {
-            if(StringUtils.equals(ngenYValue.getText(), m.getnGen().getyValue()+"")){
-                ngenYValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
-            } else {
-                ngenYValue.setText(m.getnGen().getyValue() + "");
-                ngenYValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
-            }
-        });
+        model.addListener(model.getnGen(), this::redrawNgenXValueField);
+        model.addListener(model.getnGen(), this::redrawNgenYValueField);
+    }
+
+    private void redrawSgenXValueField(Model m) {
+        String value = roundOutputNumbers ? m.getsGen().getxValueRounded()+"" : m.getsGen().getxValue()+"";
+        if(StringUtils.equals(sgenXValue.getText(), value)){
+            sgenXValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+        } else {
+            sgenXValue.setText(value);
+            sgenXValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
+        }
+    }
+
+    private void redrawSgenYValueField(Model m) {
+        String value = roundInputNumbers ? m.getsGen().getyValueRounded()+"" : m.getsGen().getyValue()+"";
+        if(StringUtils.equals(sgenYValue.getText(), value)){
+            sgenYValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+        } else {
+            sgenYValue.setText(value);
+            sgenYValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
+        }
+    }
+
+    private void redrawRgenXValueField(Model m) {
+        String value = roundOutputNumbers ? m.getrGen().getxValueRounded()+"" : m.getrGen().getxValue()+"";
+        if(StringUtils.equals(rgenXValue.getText(), value)){
+            rgenXValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+        } else {
+            rgenXValue.setText(value);
+            rgenXValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
+        }
+    }
+
+    private void redrawRgenYValueField(Model m) {
+        String value = roundInputNumbers ? m.getrGen().getyValueRounded()+"" : m.getrGen().getyValue()+"";
+        if(StringUtils.equals(rgenYValue.getText(), value)){
+            rgenYValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+        } else {
+            rgenYValue.setText(value);
+            rgenYValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
+        }
+    }
+
+    private void redrawNgenXValueField(Model m) {
+        String value = roundOutputNumbers ? m.getnGen().getxValueRounded()+"" : m.getnGen().getxValue()+"";
+        if(StringUtils.equals(ngenXValue.getText(), value)){
+            ngenXValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+        } else {
+            ngenXValue.setText(value);
+            ngenXValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
+        }
+    }
+
+    private void redrawNgenYValueField(Model m) {
+        String value = roundInputNumbers ? m.getnGen().getyValueRounded()+"" : m.getnGen().getyValue()+"";
+        if(StringUtils.equals(ngenYValue.getText(), value)){
+            ngenYValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
+        } else {
+            ngenYValue.setText(value);
+            ngenYValue.setStyle(FX_BACKGROUND_COLOR_CHANGED);
+        }
     }
 
     public Controller() {
@@ -178,7 +198,17 @@ public class Controller {
 
     @FXML
     protected void onRundenClick(){
+        roundOutputNumbers = !roundOutputNumbers;
+        redrawInputFields();
+    }
 
+    private void redrawInputFields() {
+        redrawSgenXValueField(model);
+        redrawSgenYValueField(model);
+        redrawRgenXValueField(model);
+        redrawRgenYValueField(model);
+        redrawNgenXValueField(model);
+        redrawNgenYValueField(model);
     }
 
     @FXML

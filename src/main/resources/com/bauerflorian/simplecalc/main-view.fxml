@@ -65,7 +65,7 @@
                <TextField fx:id="sgenYLabel" editable="false" text="S-Gen:" />
                <TextField fx:id="sgenYValue" promptText="c(t)-Wert S-Gen" />
                <TextField fx:id="sgenXLabel" editable="false" text="S-Gen: X=" />
-               <TextField fx:id="sgenXValue" />
+               <TextField fx:id="sgenXValue" editable="false" promptText="zu berechnen" />
             </children>
          </HBox>
          <HBox prefWidth="200.0">
@@ -73,7 +73,7 @@
                <TextField fx:id="rgenYLabel" editable="false" text="RdRP-Gen:" />
                <TextField fx:id="rgenYValue" promptText="c(t)-Wert RdRP-Gen" />
                <TextField fx:id="rgenXLabel" editable="false" text="RdRP-Gen: X=" />
-               <TextField fx:id="rgenXValue" />
+               <TextField fx:id="rgenXValue" editable="false" promptText="zu berechnen" />
             </children>
          </HBox>
          <HBox prefWidth="200.0">
@@ -81,7 +81,7 @@
                <TextField fx:id="ngenYLabel" editable="false" text="N-Gen" />
                <TextField fx:id="ngenYValue" promptText="c(t)-Wert N-Gen" />
                <TextField fx:id="ngenXLabel" editable="false" text="N-Gen: X=" />
-               <TextField fx:id="ngenXValue" />
+               <TextField fx:id="ngenXValue" editable="false" promptText="zu berechnen" />
             </children>
          </HBox>
           <Button fx:id="calcBtn" onAction="#onCalcBtnClick" text="Berechnen" />
