@@ -5,48 +5,66 @@
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="600.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bauerflorian.simplecalc.Controller">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
-
-    <Label fx:id="statusText" />
-   <HBox>
+   <MenuBar maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="597.0">
+     <menus>
+       <Menu mnemonicParsing="false" text="Preferences">
+         <items>
+           <MenuItem mnemonicParsing="false" onAction="#onPreferencesClick" text="Settings" />
+         </items>
+       </Menu>
+       <Menu mnemonicParsing="false" text="Help">
+         <items>
+           <MenuItem mnemonicParsing="false" onAction="#onAboutClick" text="About" />
+         </items>
+       </Menu>
+     </menus>
+   </MenuBar>
+   <VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="600.0" spacing="20.0">
+       <padding>
+           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+       </padding>
       <children>
-         <TextArea editable="false" maxHeight="-Infinity" prefHeight="50.0" text="Bitte c(t)-Werte der entsprechenden Gene eingeben!" wrapText="true">
-            <padding>
-               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-            </padding>
-         </TextArea>
-         <TextArea editable="false" prefHeight="50.0" text="10 hoch X Kopienzahl/ml für jedes Gen" wrapText="true">
-            <padding>
-               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-            </padding>
-         </TextArea>
+      
+          <Label fx:id="statusText" />
+         <HBox>
+            <children>
+               <TextArea editable="false" maxHeight="-Infinity" prefHeight="50.0" text="Bitte c(t)-Werte der entsprechenden Gene eingeben!" wrapText="true">
+                  <padding>
+                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                  </padding>
+               </TextArea>
+               <TextArea editable="false" prefHeight="50.0" text="10 hoch X Kopienzahl/ml für jedes Gen" wrapText="true">
+                  <padding>
+                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                  </padding>
+               </TextArea>
+            </children>
+         </HBox>
+         <HBox prefWidth="200.0">
+            <children>
+               <TextField fx:id="sgenYLabel" editable="false" text="S-Gen:" />
+               <TextField fx:id="sgenYValue" promptText="c(t)-Wert S-Gen" />
+               <TextField fx:id="sgenXLabel" editable="false" text="S-Gen: X=" />
+               <TextField fx:id="sgenXValue" />
+            </children>
+         </HBox>
+         <HBox prefWidth="200.0">
+            <children>
+               <TextField fx:id="rgenYLabel" editable="false" text="RdRP-Gen:" />
+               <TextField fx:id="rgenYValue" promptText="c(t)-Wert RdRP-Gen" />
+               <TextField fx:id="rgenXLabel" editable="false" text="RdRP-Gen: X=" />
+               <TextField fx:id="rgenXValue" />
+            </children>
+         </HBox>
+         <HBox prefWidth="200.0">
+            <children>
+               <TextField fx:id="ngenYLabel" editable="false" text="N-Gen" />
+               <TextField fx:id="ngenYValue" promptText="c(t)-Wert N-Gen" />
+               <TextField fx:id="ngenXLabel" editable="false" text="N-Gen: X=" />
+               <TextField fx:id="ngenXValue" />
+            </children>
+         </HBox>
+          <Button fx:id="calcBtn" onAction="#onCalcBtnClick" text="Calculate" />
       </children>
-   </HBox>
-   <HBox prefWidth="200.0">
-      <children>
-         <TextField fx:id="sgenYLabel" editable="false" text="S-Gen:" />
-         <TextField fx:id="sgenYValue" promptText="c(t)-Wert S-Gen" />
-         <TextField fx:id="sgenXLabel" editable="false" text="S-Gen: X=" />
-         <TextField fx:id="sgenXValue" />
-      </children>
-   </HBox>
-   <HBox layoutX="30.0" layoutY="238.0" prefWidth="200.0">
-      <children>
-         <TextField fx:id="rgenYLabel" editable="false" text="RdRP-Gen:" />
-         <TextField fx:id="rgenYValue" promptText="c(t)-Wert RdRP-Gen" />
-         <TextField fx:id="rgenXLabel" editable="false" text="RdRP-Gen: X=" />
-         <TextField fx:id="rgenXValue" />
-      </children>
-   </HBox>
-   <HBox layoutX="30.0" layoutY="307.0" prefWidth="200.0">
-      <children>
-         <TextField fx:id="ngenYLabel" editable="false" text="N-Gen" />
-         <TextField fx:id="ngenYValue" promptText="c(t)-Wert N-Gen" />
-         <TextField fx:id="ngenXLabel" editable="false" text="N-Gen: X=" />
-         <TextField fx:id="ngenXValue" />
-      </children>
-   </HBox>
-    <Button fx:id="calcBtn" onAction="#onCalcBtnClick" text="Calculate" />
+   </VBox>
 </VBox>

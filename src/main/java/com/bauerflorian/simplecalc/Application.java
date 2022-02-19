@@ -8,8 +8,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Application extends javafx.application.Application {
-
-    public static final String APPLICATION_TITLE = "Simple Calc";
+    public static final String APPLICATION_TITLE = "Simple Laboratory Calculator";
+    public static final String APPLICATION_VERSION = "v0.0.1";
 
     @Override
     public void start(Stage stage) throws IOException {

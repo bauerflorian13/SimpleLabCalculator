@@ -2,9 +2,14 @@ package com.bauerflorian.simplecalc;
 
 import com.bauerflorian.simplecalc.model.Model;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.apache.commons.lang3.StringUtils;
+
+import static com.bauerflorian.simplecalc.Application.APPLICATION_TITLE;
+import static com.bauerflorian.simplecalc.Application.APPLICATION_VERSION;
 
 public class Controller {
     public static final String N_GEN = "N-Gen";
@@ -157,4 +162,18 @@ public class Controller {
         this.model = model;
         setModelListenerCallbacks(model);
     }
+
+    @FXML
+    protected void onPreferencesClick() {
+        statusText.setText("Not implemented yet :(");
+    }
+
+    @FXML
+    protected void onAboutClick() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "This little Tool was developed by Florian Bauer :)", ButtonType.OK);
+        alert.setTitle("About " + APPLICATION_TITLE);
+        alert.setHeaderText(APPLICATION_TITLE + " " + APPLICATION_VERSION);
+        alert.showAndWait();
+    }
+
 }
