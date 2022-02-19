@@ -87,7 +87,11 @@ public class Model {
         listeners.get(simpleCalculation).forEach(l -> l.onChange(this));
     }
 
-
+    public void reset() {
+        sGen.resetXandYValues();
+        rGen.resetXandYValues();
+        nGen.resetXandYValues();
+    }
 
 
 }

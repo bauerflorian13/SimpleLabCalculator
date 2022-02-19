@@ -3,8 +3,8 @@ package com.bauerflorian.simplecalc.model;
 public class SimpleCalculation {
 
     private final LinearEquationFormula formula;
-    private double xValue;
-    private double yValue;
+    private Double xValue;
+    private Double yValue;
 
     public SimpleCalculation(LinearEquationFormula formula) {
         this.formula = formula;
@@ -24,19 +24,24 @@ public class SimpleCalculation {
         return formula;
     }
 
-    public double getxValue() {
+    public Double getxValue() {
         return xValue;
     }
 
     public Integer getxValueRounded() {
-        return Double.valueOf(Math.round(xValue)).intValue();
+        return xValue != null ? Double.valueOf(Math.round(xValue)).intValue() : null;
     }
 
-    public double getyValue() {
+    public Double getyValue() {
         return yValue;
     }
 
     public Integer getyValueRounded() {
-        return Double.valueOf(Math.round(yValue)).intValue();
+        return yValue != null ? Double.valueOf(Math.round(yValue)).intValue() : null;
+    }
+
+    public void resetXandYValues(){
+        yValue = null;
+        xValue = null;
     }
 }

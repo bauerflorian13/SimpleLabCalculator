@@ -62,6 +62,7 @@ public class Controller {
 
     private void redrawSgenXValueField(Model m) {
         String value = roundOutputNumbers ? m.getsGen().getxValueRounded()+"" : m.getsGen().getxValue()+"";
+        value = value.equals("null") ? "" : value;
         if(StringUtils.equals(sgenXValue.getText(), value)){
             sgenXValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
         } else {
@@ -72,6 +73,7 @@ public class Controller {
 
     private void redrawSgenYValueField(Model m) {
         String value = roundInputNumbers ? m.getsGen().getyValueRounded()+"" : m.getsGen().getyValue()+"";
+        value = value.equals("null") ? "" : value;
         if(StringUtils.equals(sgenYValue.getText(), value)){
             sgenYValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
         } else {
@@ -82,6 +84,7 @@ public class Controller {
 
     private void redrawRgenXValueField(Model m) {
         String value = roundOutputNumbers ? m.getrGen().getxValueRounded()+"" : m.getrGen().getxValue()+"";
+        value = value.equals("null") ? "" : value;
         if(StringUtils.equals(rgenXValue.getText(), value)){
             rgenXValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
         } else {
@@ -92,6 +95,7 @@ public class Controller {
 
     private void redrawRgenYValueField(Model m) {
         String value = roundInputNumbers ? m.getrGen().getyValueRounded()+"" : m.getrGen().getyValue()+"";
+        value = value.equals("null") ? "" : value;
         if(StringUtils.equals(rgenYValue.getText(), value)){
             rgenYValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
         } else {
@@ -102,6 +106,7 @@ public class Controller {
 
     private void redrawNgenXValueField(Model m) {
         String value = roundOutputNumbers ? m.getnGen().getxValueRounded()+"" : m.getnGen().getxValue()+"";
+        value = value.equals("null") ? "" : value;
         if(StringUtils.equals(ngenXValue.getText(), value)){
             ngenXValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
         } else {
@@ -112,6 +117,7 @@ public class Controller {
 
     private void redrawNgenYValueField(Model m) {
         String value = roundInputNumbers ? m.getnGen().getyValueRounded()+"" : m.getnGen().getyValue()+"";
+        value = value.equals("null") ? "" : value;
         if(StringUtils.equals(ngenYValue.getText(), value)){
             ngenYValue.setStyle(FX_BACKGROUND_COLOR_DEFAULT);
         } else {
@@ -213,7 +219,10 @@ public class Controller {
 
     @FXML
     protected void onResetBtnClick(){
-
+        statusText.setText("Zahlen zurückgesetzt.");
+        setDefaultColorSchemeToTextfields();
+        model.reset();
+        redrawInputFields();
     }
 
 }
