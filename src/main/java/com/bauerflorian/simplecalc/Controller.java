@@ -106,7 +106,7 @@ public class Controller {
 
     @FXML
     protected void onCalcBtnClick() {
-        statusText.setText("Calculating...");
+        statusText.setText("Berechne...");
         long startTime = System.currentTimeMillis();
         setDefaultColorSchemeToTextfields();
 
@@ -132,7 +132,7 @@ public class Controller {
 
         long endTime = System.currentTimeMillis();
         long duration = endTime - startTime;
-        statusText.setText("Calculation finished in " + (duration * 1.0) / 1000 + "s");
+        statusText.setText("Berechnung erfolgreich abgeschlossen in " + (duration * 1.0) / 1000 + "s");
     }
 
     private void setDefaultColorSchemeToTextfields() {
@@ -146,7 +146,7 @@ public class Controller {
 
     private boolean validateInputTextField(TextField inputField, String valueName) {
         if(!isInCorrectNumberFormat(inputField.getText())){
-            statusText.setText("Please enter a valid value for " + valueName + ".");
+            statusText.setText("Bitte valide Nummer eingeben für " + valueName + ".");
             inputField.setStyle(FX_BACKGROUND_COLOR_ERROR);
             return false;
         }
@@ -165,7 +165,7 @@ public class Controller {
 
     @FXML
     protected void onPreferencesClick() {
-        statusText.setText("Not implemented yet :(");
+        statusText.setText("Nicht verfügbar :(");
     }
 
     @FXML
@@ -174,6 +174,16 @@ public class Controller {
         alert.setTitle("About " + APPLICATION_TITLE);
         alert.setHeaderText(APPLICATION_TITLE + " " + APPLICATION_VERSION);
         alert.showAndWait();
+    }
+
+    @FXML
+    protected void onRundenClick(){
+
+    }
+
+    @FXML
+    protected void onResetBtnClick(){
+
     }
 
 }
